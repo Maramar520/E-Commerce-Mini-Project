@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pl=PL">
+<head>
+    <!-- Basic -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Site Metas -->
+    <link rel="icon" href="https://icons.iconarchive.com/icons/papirus-team/papirus-apps/48/icon-requests-icon.png"/>
+
+    <title>E-Commerce</title>
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    
+    <link th:href="@{/css/main.css}" rel="stylesheet" />
+</head>
+<body>
+
+<div class="wrapper fadeInDown">
+  <div id="formContent">
+    <!-- Tabs Titles -->
+    <!-- Icon -->
+    <div class="fadeIn first">
+      <h1 class="login-header" style="text-align:center;margin-top: 20px; color: grey;">Register</h1>
+    </div>
+
+    <!-- Login Form -->
+    <form th:action="@{/register}" class="login-form" th:object="${user}" method="post">
+      <input type="text" id="form3Example1" required="required" th:field="*{userName}" class="fadeIn one" name="username" placeholder="username">
+      <input type="text" id="form3Example2" required="required" th:field="*{email}" class="fadeIn second" name="email address" placeholder="email address">
+      <input type="text" id="form3Example3" required="required" th:field="*{password}" class="fadeIn third" name="password" placeholder="password">
+      <input type="submit" class="fadeIn fourth" value="Sign Up">
+    </form>
+
+    <!-- Remind Passowrd -->
+    <div class="text-center" id="formFooter">
+         <h6 style="text-align:center;margin-top: 20px; color: grey;">Already have an Account?</br>
+         <a th:href="@{/login}" class="login-link">Login now</a>
+         </h6>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pl=PL">
+<head>
+    <!-- Basic -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Site Metas -->
+    <link rel="icon" href="https://icons.iconarchive.com/icons/papirus-team/papirus-apps/48/icon-requests-icon.png"/>
+
+    <title>E-Commerce</title>
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    
+    <link th:href="@{/css/main.css}" rel="stylesheet" />
+    <link th:href="@{/css/style.css}" rel="stylesheet" />
+    <link th:href="@{/css/responsive.css}" rel="stylesheet"/>
+</head>
+<body>
+<div class="wrapper fadeInDown">
+  <div id="formContent">
+    <!-- Tabs Titles -->
+    <div  th:if="${param.error != null}" class="alert d-flex justify-content-center alert-warning alert-dismissible fade show" role="alert">
+        <strong>error!</strong> bad credentials
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div  th:if="${regSucc != null}" class="alert alert-success d-flex justify-content-center alert-dismissible fade show" role="alert">
+        [[${regSucc}]]
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <!-- Icon -->
+    <div class="fadeIn first">
+      <h1 class="login-header" style="text-align:center;margin-top: 20px; color: grey;">Login</h1>
+    </div>
+
+    <!-- Login Form -->
+    <form action="login" method="post">
+      <input type="text" id="form2Example1" class="fadeIn second" name="username" placeholder="username">
+      <input type="text" id="form2Example2" class="fadeIn third" name="password" placeholder="password">
+      <input type="submit" class="fadeIn fourth" value="Log In">
+    </form>
+
+    <!-- Remind Passowrd -->
+    <div class="text-center" id="formFooter">
+         <h6 style="text-align:center;margin-top: 20px; color: grey;">Don't have an Account yet?</br>
+         <a th:href="@{/register}" class="login-link">Create new</a>
+         </h6>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>
