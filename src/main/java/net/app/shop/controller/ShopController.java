@@ -1,5 +1,6 @@
 package net.app.shop.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import net.app.shop.model.Cart;
+import net.app.shop.model.Order;
+import net.app.shop.repo.OrderRepository;
 import net.app.shop.service.ProductService;
 import net.app.shop.service.ShopService;
 import net.app.user.model.AppUser;
@@ -27,12 +30,14 @@ public class ShopController {
 	private final ShopService shopService;
     private final UserService userService;
     private final ProductService productService;
+    private final OrderRepository orderRepository;
     
     @Autowired
-    public ShopController(ShopService shopService, UserService userService, ProductService productService) {
+    public ShopController(ShopService shopService, UserService userService, ProductService productService, OrderRepository orderRepository) {
         this.shopService = shopService;
         this.userService = userService;
         this.productService = productService;
+        this.orderRepository = orderRepository;
     }
     
     @GetMapping("/index")
@@ -85,16 +90,34 @@ public class ShopController {
         return "cart";
     }
     
-    @GetMapping("/checkout")
-    public String checkout(Model model, Authentication auth) {
-        AppUser appUser = (AppUser) auth.getPrincipal();
+    @PostMapping("/checkout")
+    public String processCheckout(Model model, Authentication auth, @RequestParam String paymentMethod, @RequestParam String shippingMethod) {
+        AppUser user = (AppUser) auth.getPrincipal();
 
-        shopService.clearCart(appUser);
+        // Call your shop service's checkout method with payment and shipping methods
+        Order order = shopService.checkout(user, paymentMethod, shippingMethod);
 
-        // Display a success message to the user
-        model.addAttribute("user", userService.getUserByEmail(auth.getName()));
-        model.addAttribute("message", "Thank you for your purchase!");
 
-        return "checkout-success";
+        model.addAttribute("success","you have successfully checkout");
+        return "redirect:/Customer/index"; // Redirect to a success page
     }
+    
+    @GetMapping("/order-history/{user_id}")
+    public String orderView(@PathVariable("user_id") Long userId, Model model, Authentication auth) {
+        UserEntity user = userService.getUserById(userId); // Replace this with your actual method to retrieve a user by ID
+        
+        if (user == null) {
+            // Handle the case where the user is not found
+            return "error"; // You can create an error template for this case
+        }
+        
+        List<Order> orderHistory = shopService.getOrderHistoryByUser(user); // Implement this method in your ShopService
+        
+        model.addAttribute("user", user);
+        model.addAttribute("order", orderHistory);
+        
+        return "orderHistory";
+    }
+    
+    
 }

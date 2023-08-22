@@ -60,6 +60,10 @@ public class UserService {
    public UserEntity getUserByEmail(String email){
         return userRepository.findByEmail(email);
    }
+   
+	public UserEntity getUserById(Long userId) {
+	    return userRepository.findById(userId).orElse(null);
+	}
 
 
 }

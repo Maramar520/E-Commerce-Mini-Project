@@ -20,7 +20,7 @@ public class UserController {
     }
     
     @GetMapping(value={"/login","/"})
-    public String  loginView(){
+    public String loginView(){
         return "login";
     }
     

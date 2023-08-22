@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import net.app.shop.dto.ProductDto;
+import net.app.shop.model.Order;
 import net.app.shop.model.Product;
+import net.app.shop.repo.OrderRepository;
 import net.app.shop.repo.ProductRepository;
 
 import java.io.IOException;
@@ -15,10 +17,12 @@ import java.util.List;
 public class ProductService {
 	
     private final ProductRepository productRepository;
+    private final OrderRepository orderRepository;
     
     @Autowired
-    public ProductService(ProductRepository productRepository) {
+    public ProductService(ProductRepository productRepository, OrderRepository orderRepository) {
         this.productRepository = productRepository;
+        this.orderRepository = orderRepository;
     }
     
    public Product addProduct(ProductDto productDto)  {
@@ -55,7 +59,7 @@ public class ProductService {
 
     public List<Product> getAllProducts(){
         return productRepository.findAll();
-    }
+    }   
     
     public Product getProductByName(String name){
         return productRepository.findByName(name);

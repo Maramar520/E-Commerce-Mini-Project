@@ -175,25 +175,52 @@
                         </td>
                         <td data-th="Subtotal" class="text-center">[[${item.getSubtotal()}]]</td>
                         <td class="actions" data-th="">
-                            <button th:href class="btn btn-info btn-sm"><i class="fa fa-refresh"></i></button>
-                           </form>
-                            <a th:href="@{/Customer/remove-cartItem/{id}(id=${item.id})}" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></a>
-                        </td>
+                            <button  th:href class="btn btn-info btn-sm"><i class="fa fa-refresh"></i></button>
+                            <a th:href="@{/Customer/remove-cartItem/{id}(id=${item.id})}" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></a> 
+                        </form>
                     </tr>
-                    </tbody>
-                    <tfoot>
-                    <tr>
-                        <td><a th:href="@{/Customer/index}" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
-                        <td colspan="2" class="hidden-xs"></td>
-                        <td class="hidden-xs text-center"><strong>Total Rp [[${shop.getTotalPrice()}]]</strong></td>
-                        <td><a th:href="@{/Customer/checkout}" class="btn btn-success btn-block">Checkout <i class="fa fa-angle-right"></i></a></td>
-                    </tr>
-                    </tfoot>
-                </table>
+                        <!-- Payment and Shipping Method Form -->
+                    <form th:action="@{/Customer/checkout}" th:object="${order}" method="post">
+                        <!-- Cart items loop here -->
+                        <!-- ... -->
+    
+                        <tr>
+                           <td colspan="4" class="text-right">Payment Method : </td>
+                           <td>
+                           <select name="paymentMethod" class="form-control">
+                           <option value="creditCard">Credit Card</option>
+                           <option value="paypal">PayPal</option>
+                           <!-- Add more options if needed -->
+                           </select>
+                           </td>
+                           </tr>
+                        <tr>
+                           <td colspan="4" class="text-right">Shipping Method :</td>
+                           <td>
+                           <select name="shippingMethod" class="form-control">
+                           <option value="standard">Standard</option>
+                           <option value="express">Express</option>
+                           <!-- Add more options if needed -->
+                           </select>
+                           </td>
+                       </tr>
+                       <tr>
+		                   <td colspan="4" class="text-right">Total Rp : </td> 
+		                   <td><strong>[[${shop.getTotalPrice()}]]</strong></td>
+	                   </tr>
+    
+                       <!-- ... -->
+    
+                       <tr>
+                           <td colspan="5" class="text-center">
+                                <button type="submit" class="btn btn-success btn-block">Checkout</button>
+                           </td>
+                       </tr>
+                    </form>                 
+                    </tbody>                           
+                </table>                
             </div>
-
         </div>
-
     </div>
 </section>
 

@@ -38,6 +38,7 @@
 
 <div class="hero_area">
     <!-- header section -->
+    
     <header class="header_section">
         <div class="header_top" style="background-color: #56baed;">
             <div class="container-fluid">
@@ -64,6 +65,9 @@
                     <ul class="navbar-nav ">
                             <li class="nav-item active">
                                 <a class="nav-link" style="color: white;" th:href="@{/Customer/index}">Home </a>
+                            </li>
+                            <li class="nav-item active">
+                                <a class="nav-link" style="color: white;" th:href="@{/Customer/order-history/{id}(id=${user.id})}">History </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" style="color: white; font: bold;" th:href="@{/logout}">Logout</a>

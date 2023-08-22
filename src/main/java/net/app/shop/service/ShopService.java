@@ -1,5 +1,6 @@
 package net.app.shop.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -10,8 +11,10 @@ import org.springframework.stereotype.Service;
 
 import net.app.shop.model.Cart;
 import net.app.shop.model.CartItem;
+import net.app.shop.model.Order;
 import net.app.shop.repo.CartItemRepository;
 import net.app.shop.repo.CartRepository;
+import net.app.shop.repo.OrderRepository;
 import net.app.shop.repo.ProductRepository;
 import net.app.user.model.AppUser;
 import net.app.user.model.UserEntity;
@@ -24,14 +27,16 @@ public class ShopService {
     private final ProductRepository productRepository;
     private final CartRepository CartRepository;
     private final UserRepository userRepository;
+    private final OrderRepository orderRepository;
     
     @Autowired
     public ShopService(CartItemRepository cartItemRepository, ProductRepository productRepository,
-                       CartRepository CartRepository, UserRepository userRepository) {
+                       CartRepository CartRepository, UserRepository userRepository, OrderRepository orderRepository) {
         this.cartItemRepository = cartItemRepository;
         this.productRepository = productRepository;
         this.CartRepository = CartRepository;
         this.userRepository = userRepository;
+        this.orderRepository = orderRepository;
     }
     
     public void addItem(AppUser user, Long product_id, Integer quantity){
@@ -118,6 +123,29 @@ public class ShopService {
 
     }
     
+    public Order checkout(AppUser user, String paymentMethod, String shippingMethod) {
+        Cart shoppingCart = getShoppingCartByUser(user);
+
+        // Perform any necessary order processing and payment logic here
+        
+        // Create an Order entity to represent the completed order
+        Order order = new Order();
+        order.setUser(userRepository.findByEmail(user.getUsername()));
+        order.setPaymentMethod(paymentMethod);
+        order.setShippingMethod(shippingMethod);
+        order.setTotalPrice(shoppingCart.getTotalPrice());;
+        order.setOrderDate(order.getOrderDate());
+        // Set other order details as needed
+
+        // Save the order to the database
+        Order savedOrder = orderRepository.save(order);
+
+        // Clear the user's shopping cart after successful checkout
+        clearCart(user);
+
+        return savedOrder;
+    }
+    
     public void clearCart(AppUser user) {
         Cart shoppingCart = getShoppingCartByUser(user);
         
@@ -127,6 +155,15 @@ public class ShopService {
         // Save the updated shopping cart
         CartRepository.save(shoppingCart);
     }
-    
+
+	public List<Order> getAllOrders(UserEntity user) {
+		// TODO Auto-generated method stub
+		return orderRepository.findAll();
+	}
+
+	public List<Order> getOrderHistoryByUser(UserEntity user) {
+	    return orderRepository.findByUser(user);
+	}
+	
 
 }
