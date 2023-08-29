@@ -98,8 +98,15 @@
                             <li class="nav-item active">
                                 <a class="nav-link" style="color: white;" th:href="@{/Customer/index}">Home </a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" style="color: white; font: bold;" th:href="@{/logout}">Logout</a>
+                            <li class="nav-item dropdown"> <!-- Tambahkan class "dropdown" pada li ini -->
+                                <a class="nav-link dropdown-toggle" style="color: white;" href="#" id="profileDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Profil
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="profileDropdown"> <!-- Isi dropdown-menu dengan opsi dropdown -->
+                                <a class="dropdown-item" th:href="@{/Customer/editer-profile/{id}(id=${user.id})}">Edit Profile</a>
+                                <a class="dropdown-item" th:href="@{/Customer/order-history/{id}(id=${user.id})}">History</a>
+                                <a class="dropdown-item" th:href="@{/logout}">Logout</a>
+                                </div>
                             </li>
                     </ul>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -123,9 +130,7 @@
                                    <span class="label">0</span>
                                    <i class="fa fa-shopping-cart" style='color: #002244' aria-hidden="true"></i>
                             </a>
-                            <a class="account-link">
-                                 <i class="fa fa-user" style='color: #002244' aria-hidden="true"></i>
-                            </a>
+                            
                             </div>
                         </ul>
                     </div>
@@ -240,5 +245,6 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <!-- custom js -->
 <script th:src="@{/js/custrom.js}"></script>
+<script th:src="@{/js/profil.js}"></script>
 </body>
 </html>

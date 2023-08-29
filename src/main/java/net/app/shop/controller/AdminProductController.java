@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import net.app.shop.dto.ProductDto;
 import net.app.shop.exception.NotFoundException;
@@ -126,5 +127,4 @@ public class AdminProductController {
        return "redirect:/Admin/indexUser";
    }
    
-
 }

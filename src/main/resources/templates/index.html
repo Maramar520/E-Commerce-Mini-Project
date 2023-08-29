@@ -20,6 +20,9 @@
 
     <!-- rensponsive style -->
     <link th:href="@{/css/responsive.css}" rel="stylesheet" />
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    
     <style>
         .label{
             background-color: white !important;
@@ -66,11 +69,15 @@
                             <li class="nav-item active">
                                 <a class="nav-link" style="color: white;" th:href="@{/Customer/index}">Home </a>
                             </li>
-                            <li class="nav-item active">
-                                <a class="nav-link" style="color: white;" th:href="@{/Customer/order-history/{id}(id=${user.id})}">History </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" style="color: white; font: bold;" th:href="@{/logout}">Logout</a>
+                            <li class="nav-item dropdown"> <!-- Tambahkan class "dropdown" pada li ini -->
+                                <a class="nav-link dropdown-toggle" style="color: white;" href="#" id="profileDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Profil
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="profileDropdown"> <!-- Isi dropdown-menu dengan opsi dropdown -->
+                                <a class="dropdown-item" th:href="@{/Customer/editer-profile/{id}(id=${user.id})}">Edit Profile</a>
+                                <a class="dropdown-item" th:href="@{/Customer/order-history/{id}(id=${user.id})}">History</a>
+                                <a class="dropdown-item" th:href="@{/logout}">Logout</a>
+                                </div>
                             </li>
                     </ul>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -94,9 +101,6 @@
                                    <span class="label">0</span>
                                    <i class="fa fa-shopping-cart" style='color: #002244' aria-hidden="true"></i>
                             </a>
-                            <a class="account-link">
-                                 <i class="fa fa-user" style='color: #002244' aria-hidden="true"></i>
-                            </a>
                             </div>
                         </ul>
                     </div>
@@ -105,51 +109,31 @@
         </div>
     </header>
 
-    <!-- slider section -->
-    <section class="slider_section" style="background-color: white;">
-        <div id="customCarousel1" class="carousel slide" data-ride="carousel">
-            <div class="carousel-inner">
-                <div th:each="p ,state : ${products}"  th:class="${state.first}?'carousel-item active':'carousel-item'">
-                    <div class="container ">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="detail-box">
-                                    <h1>
-                                       [[${p.name}]]
-                                    </h1>
-                                    <p>
-                                        [[${p.description}]]
-                                    </p>
-
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="img-box">
-                                    <img th:src="*{'data:image/jpeg;base64,'+{p.image}}" alt="" height="300px">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+<section class="slider_section" style="background-color: white;">
+    <div id="customCarousel1" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+            <div th:each="p, state : ${products}" th:class="${state.first}?'carousel-item active':'carousel-item'">
+				<img src="/images/banner.jpg" alt="" height="450px" style="width: 100%;">
+				<a class="carousel-control-prev" href="#customCarousel1" role="button" data-slide="prev" style="position: absolute; top: 50%; transform: translateY(-50%); left: 50px;">
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="sr-only">Poprzedni</span>
+                    </a>
+                    <a class="carousel-control-next" href="#customCarousel1" role="button" data-slide="next" style="position: absolute; top: 50%; transform: translateY(-50%); right: 50px;">
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                        <span class="sr-only">Następny</span>
+                    </a>
+                <div class="container position-relative">
+                    
+                    
                 </div>
-
-            </div>
-            <div class="carousel_btn_box">
-                <a class="carousel-control-prev" href="#customCarousel1" role="button" data-slide="prev">
-                    <i class="fa fa-angle-left" aria-hidden="true"></i>
-                    <span class="sr-only">Poprzedni</span>
-                </a>
-                <a class="carousel-control-next" href="#customCarousel1" role="button" data-slide="next">
-                    <i class="fa fa-angle-right" aria-hidden="true"></i>
-                    <span class="sr-only">Następny</span>
-                </a>
             </div>
         </div>
-    </section>
-</div>
+    </div>
+</section>
 
 <!-- product section -->
 
-<section class="product_section pt-4" style="background-color: #E1EBEE;">
+<section class="product_section pt-4" style="background-color: white;">
     <div class="container">
         <div class="heading_container heading_center">
             <h2 style='color: #002244'>
@@ -263,7 +247,6 @@
     </div>
 </footer>
 <!-- footer section -->
-
 <!-- jQery -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
