@@ -2,6 +2,7 @@ package net.app.shop.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Sort;
 
 import net.app.shop.dto.ProductDto;
 import net.app.shop.model.Order;
@@ -80,5 +81,14 @@ public class ProductService {
     public void deleteProduct(Long id){
         productRepository.deleteById(id);
     }
+    
+    public List<Product> searchAndSortProducts(String query, String sortField, Sort.Direction sortDirection) {
+        Sort sort = Sort.by(sortDirection, sortField);
 
+        if ("price".equals(sortField)) {
+            sort = sort.and(Sort.by("price")); // Adding an additional sort condition for price
+        }
+
+        return productRepository.findByNameContainingIgnoreCase(query, sort);
+    }
 }

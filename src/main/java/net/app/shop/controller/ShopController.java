@@ -15,10 +15,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.Sort;
 
 import net.app.shop.exception.NotFoundException;
 import net.app.shop.model.Cart;
 import net.app.shop.model.Order;
+import net.app.shop.model.Product;
 import net.app.shop.repo.OrderRepository;
 import net.app.shop.service.ProductService;
 import net.app.shop.service.ShopService;
@@ -138,6 +140,24 @@ public class ShopController {
     public String editUser(@ModelAttribute UserEntity userEntity) throws NotFoundException{
         userService.updateUser(userEntity.getId(), userEntity);
         return "redirect:/Customer/index";
+    }
+    
+    @GetMapping("/search")
+    public String searchProducts(Model model,
+            @RequestParam("query") String query,
+            @RequestParam(value = "sortField", defaultValue = "name") String sortField,
+            @RequestParam(value = "sortDirection", defaultValue = "ASC") Sort.Direction sortDirection) {
+    	
+    	List<Product> searchResults = productService.searchAndSortProducts(query, sortField, sortDirection);
+        model.addAttribute("products", searchResults);
+
+
+        String Email = SecurityContextHolder.getContext().getAuthentication().getName();
+        UserEntity user = userService.getUserByEmail(Email);
+        model.addAttribute("user", user);
+        model.addAttribute("shop", shopService.getShoppingCartByUser((AppUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal()));
+
+        return "index";
     }
        
 }

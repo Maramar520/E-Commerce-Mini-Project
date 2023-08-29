@@ -66,6 +66,14 @@
             <div class="container-fluid">
                 <nav class="navbar navbar-expand-lg custom_nav-container ">
                     <ul class="navbar-nav ">
+                            
+                    </ul>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class=""> </span>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav ">
                             <li class="nav-item active">
                                 <a class="nav-link" style="color: white;" th:href="@{/Customer/index}">Home </a>
                             </li>
@@ -79,19 +87,6 @@
                                 <a class="dropdown-item" th:href="@{/logout}">Logout</a>
                                 </div>
                             </li>
-                    </ul>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class=""> </span>
-                    </button>
-
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav ">
-                            <from class="search_form">
-                                    <input type="text" class="form-control" placeholder="search products...">
-                                    <button type="submit" style="background-color: #002244;">
-                                    <i class="fa fa-search" aria-hidden="true"></i>
-                               </button>
-                            </from>
                             <div class="user_option_box">
 							<a  th:if="${shop != null}" th:href="@{'/Customer/cart?id='+${shop.id}}" class="cart-link">
                                    <span class="label">[[${shop.nbItems}]]</span>
@@ -140,6 +135,24 @@
                 our products
             </h2>
         </div>
+        <!-- Add search form here -->
+        <div class="search-form">
+            <form action="/Customer/search" method="GET">
+                   <input type="text" name="query" placeholder="Search products...">
+                   <button type="submit" style="top:50%; background-color: skyblue; color: #fff; border:none; border-radius:10px;"><i class="fa fa-search" ></i></button>
+                   <label>Sort By:</label>
+                   <select name="sortField" id="sortField" style="top:50%; background-color: skyblue; color: #fff; border:none; border-radius:10px;">
+                        <option value="name">Name</option>
+                        <option value="price">Price</option>
+                  </select>
+                  <label>Sort Direction:</label>
+                  <select name="sortDirection" id="sortDirection" style="top:50%; background-color: skyblue; color: #fff; border:none; border-radius:10px;">
+                  <option value="ASC">Ascending</option>
+                  <option value="DESC">Descending</option>
+                   </select>
+                   <button type="submit" class="sort-button" style="top:50%; background-color: skyblue; color: #fff; border:none; border-radius:10px;"><i class="fa fa-sort"></i> Sort</button>
+            </form>
+        </div>
         <div class="row">
             <div class="col-sm-6 col-lg-4" th:each="p :${products}">
                 <div class="box">
@@ -172,7 +185,6 @@
                                                 <p><strong>Description : </strong><span>[[${p.description}]]</span></p>
                                                 <p><strong>Price : Rp </strong><span>[[${p.price}]]</span></p>
                                                 <p><strong>Stock : </strong><span>[[${p.stock}]]</span></p>
-                                                <p><strong>Reduction : </strong><span>[[${p.reduction}]]</span></p>
                                             </div>
                                         </div>
                                     </div>

@@ -95,7 +95,15 @@
             <div class="container-fluid">
                 <nav class="navbar navbar-expand-lg custom_nav-container ">
                     <ul class="navbar-nav ">
-                            <li class="nav-item active">
+                            
+                    </ul>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class=""> </span>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav ">
+							<li class="nav-item active">
                                 <a class="nav-link" style="color: white;" th:href="@{/Customer/index}">Home </a>
                             </li>
                             <li class="nav-item dropdown"> <!-- Tambahkan class "dropdown" pada li ini -->
@@ -108,19 +116,6 @@
                                 <a class="dropdown-item" th:href="@{/logout}">Logout</a>
                                 </div>
                             </li>
-                    </ul>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class=""> </span>
-                    </button>
-
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav ">
-                            <from class="search_form">
-                                    <input type="text" class="form-control" placeholder="search products...">
-                                    <button type="submit" style="background-color: #002244;">
-                                    <i class="fa fa-search" aria-hidden="true"></i>
-                               </button>
-                            </from>
                             <div class="user_option_box">
 							<a  th:if="${shop != null}" th:href="@{'/Customer/cart?id='+${shop.id}}" class="cart-link">
                                    <span class="label">[[${shop.nbItems}]]</span>
@@ -172,7 +167,7 @@
                                 </div>
                             </div>
                         </td>
-                        <td data-th="Price">Rp [[${item.product.price}]]</td>
+                        <td data-th="Price">[[${item.product.price}]]</td>
                         <form th:action="@{/Customer/update-cartItem}">
                         <td data-th="Quantity">
                             <input type="number" name="quantity" min="1" th:value="${item.getQuantity()}" th:attr="max='${item.product.stock}'" class="form-control text-center" value="1">
